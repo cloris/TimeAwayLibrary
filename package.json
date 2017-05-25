@@ -1,6 +1,6 @@
 {
-  "name": "time-away",
-  "version": "0.6.0",
+  "name": "timeawayibrary",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "engines": {
@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cloris/time-away.git"
+    "url": "git+https://github.com/suheart/timeAwaylibrary.git"
   },
   "keywords": [
     "timeaway",
