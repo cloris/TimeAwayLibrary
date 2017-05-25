@@ -1,0 +1,13 @@
+.page{
+    margin: 0;
+    i{
+      color: black!important;
+    }
+    button:before{
+      height: 0!important;
+    }
+    div[role="tabpanel"]{
+      padding: 0 8px!important;
+      margin-left: 10px!important;
+    }
+  }
