@@ -22,7 +22,7 @@ export default class MyTimeAwayBasicDailog extends React.Component<IMyTimeAwayDe
                 type={DialogType.normal}
                 onDismiss={this._closeDialog.bind(this)}
                 title='Hint'
-                subText='Are you sure to delete this Time Away entry?'
+                subText='Are you sure to delete this Time Away entry?cloristest'
                 isBlocking={true}
                 containerClassName='ms-dialogMainOverride'>
                 {null /** You can also include null values as the result of conditionals */}
