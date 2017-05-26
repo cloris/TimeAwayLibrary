@@ -44,6 +44,7 @@ export namespace SharePointUtilityModule {
                 `{
                 "@odata.type": "#SP.List",
                 "AllowContentTypes": true,
+                "EnableModeration": true,
                 "BaseTemplate": ${baseTemplate},
                 "ContentTypesEnabled": true,
                 "Description": "${listDescription}",

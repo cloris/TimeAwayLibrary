@@ -1,23 +1,23 @@
 import * as React from 'react';
 import { CommandButton, Label, css } from 'office-ui-fabric-react';
-import styles from './MyTimeAwayPage.module.scss';
-import {IMyTimeAwayPageProps} from './IMyTimeAwayPageProps';
-import IMyTimeAwayPageState from './IMyTimeAwayPageState';
+import styles from './MyTimeAwayContainer.module.scss';
+import {IMyTimeAwayContainerProps} from './IMyTimeAwayContainerProps';
+import IMyTimeAwayContainerState from './IMyTimeAwayContainerState';
 import MyTimeAwayTab from '../Tab/MyTimeAwayTab';
-import DeleteDialog from '../DeleteDialog/MyTimeAwayDeleteDailog';
+import DeleteDialog from '../DeleteDialog/MyTimeAwayDeleteDialog';
 import TimeAwayCreateDialog from "../CreateDialog/TimeAwayCreateDialog";
 import { IMyTimeAwayItem, TimeAwayDialogType, TimePeriod } from "../../models/timeAwayModel";
 
-export class MyTimeAwayPage extends React.Component<IMyTimeAwayPageProps, IMyTimeAwayPageState>{
+export class MyTimeAwayContainer extends React.Component<IMyTimeAwayContainerProps, IMyTimeAwayContainerState>{
   private _selectMyTimeAwayItem: IMyTimeAwayItem;
 
-  constructor(props: IMyTimeAwayPageProps) {
+  constructor(props: IMyTimeAwayContainerProps) {
     super(props);
     this.state = { showDialogType: TimeAwayDialogType.Hidden, period: this.props.period, items: [] };
   }
 
   //web part 5days change
-  public componentWillReceiveProps(props: IMyTimeAwayPageProps) {
+  public componentWillReceiveProps(props: IMyTimeAwayContainerProps) {
     this.props.dataProvider.getMyTimeAwayItems().then(
       (items: IMyTimeAwayItem[]) => {
         this.setState({ items: items });
@@ -84,6 +84,7 @@ export class MyTimeAwayPage extends React.Component<IMyTimeAwayPageProps, IMyTim
     if (item.id != null && item.id > 0) {
       return this.props.dataProvider.updateMyTimeAwayItem(item).then(
         (items: IMyTimeAwayItem[]) => {
+          this._selectMyTimeAwayItem = item;
           this.setState({ items: items, showDialogType: TimeAwayDialogType.Hidden });
           return;
         });
@@ -117,10 +118,10 @@ export class MyTimeAwayPage extends React.Component<IMyTimeAwayPageProps, IMyTim
 
   // select tab call back
   private _tabOperationClickCallback(period: TimePeriod): void {
-    this.props.dataProvider.period = period;
+    this.props.dataProvider.updatePeriod(period);
     this.props.dataProvider.getMyTimeAwayItems().then(
       (items: IMyTimeAwayItem[]) => {
-        this.setState({ items: items, period: period });
+        this.setState({ items: items, period: period, showDialogType: TimeAwayDialogType.Hidden  });
       });
   }
 }

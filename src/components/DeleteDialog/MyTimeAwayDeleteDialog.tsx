@@ -3,15 +3,15 @@ import {
     Dialog, DialogType, DialogFooter, PrimaryButton, DefaultButton, Spinner,
     SpinnerSize
 } from 'office-ui-fabric-react';
-import IMyTimeAwayDeleteDailogProps from './IMyTimeAwayDeleteDailogProps';
-import IMyTimeAwayDeleteDailogState from './IMyTimeAwayDeleteDailogState';
+import IMyTimeAwayDeleteDialogProps from './IMyTimeAwayDeleteDialogProps';
+import IMyTimeAwayDeleteDialogState from './IMyTimeAwayDeleteDialogState';
 
-export default class MyTimeAwayBasicDailog extends React.Component<IMyTimeAwayDeleteDailogProps, IMyTimeAwayDeleteDailogState>{
-    constructor(props: IMyTimeAwayDeleteDailogProps) {
+export default class MyTimeAwayBasicDailog extends React.Component<IMyTimeAwayDeleteDialogProps, IMyTimeAwayDeleteDialogState>{
+    constructor(props: IMyTimeAwayDeleteDialogProps) {
         super(props);
         this.state = { showDialog: this.props.showDialog };
     }
-    public componentWillReceiveProps(props: IMyTimeAwayDeleteDailogProps) {
+    public componentWillReceiveProps(props: IMyTimeAwayDeleteDialogProps) {
         this.setState({ showDialog: props.showDialog });
     }
     
@@ -21,8 +21,8 @@ export default class MyTimeAwayBasicDailog extends React.Component<IMyTimeAwayDe
                 isOpen={this.state.showDialog}
                 type={DialogType.normal}
                 onDismiss={this._closeDialog.bind(this)}
-                title='Hint'
-                subText='Are you sure to delete this Time Away entry?cloristest'
+                title='Confirm'
+                subText='Are you sure you wish to delete this Time Away entry?'
                 isBlocking={true}
                 containerClassName='ms-dialogMainOverride'>
                 {null /** You can also include null values as the result of conditionals */}

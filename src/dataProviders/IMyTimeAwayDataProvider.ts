@@ -3,8 +3,9 @@ import { TimePeriod } from "../models/timeAwayModel";
 
 export interface IMyTimeAwayDataProvider {
 
-  mormalWeekToggle: boolean;
-  period : TimePeriod;
+  updateWeekType(value: boolean);
+
+  updatePeriod(value: TimePeriod);
 
   getTimeAwayListItemEntityTypeFullName(): Promise<string>;
 

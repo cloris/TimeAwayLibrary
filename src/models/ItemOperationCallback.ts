@@ -1,5 +1,4 @@
-import {IMyTimeAwayItem} from './timeAwayModel';
-import { TimePeriod } from "./timeAwayModel";
+import { IMyTimeAwayItem, TimePeriod } from "./timeAwayModel";
 
 export type ItemTabOperationCallback = (period: TimePeriod) => void;
 export type ItemConfirmOperationCallback = () => void;

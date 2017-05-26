@@ -1,8 +1,8 @@
 import { ItemConfirmOperationCallback } from "../../models/ItemOperationCallback";
 
-interface IMyTimeAwayBasicDailogProps {
+interface IMyTimeAwayDeleteDialogProps {
     showDialog: boolean;
     itemDeleteConfirmOperationCallback: ItemConfirmOperationCallback;
 }
 
-export default IMyTimeAwayBasicDailogProps;
+export default IMyTimeAwayDeleteDialogProps;

@@ -6,10 +6,10 @@ import {
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import * as moment from 'moment';
 import {IMyTimeAwayDataProvider} from '../dataProviders/IMyTimeAwayDataProvider';
-import { TimePeriod, IMyTimeAwayItem, IPerson } from "../models/timeAwayModel";
+import { TimePeriod, IMyTimeAwayItem, IPerson, WeekType } from "../models/timeAwayModel";
 
 export class SharePointDataProvider implements IMyTimeAwayDataProvider {
-  private _mormalWeekToggle: boolean;
+  private _weekType: WeekType;
   private _period: TimePeriod;
 
   private _listName: string;
@@ -21,9 +21,9 @@ export class SharePointDataProvider implements IMyTimeAwayDataProvider {
   private _webPartContext: IWebPartContext;
   private _currentUser: IPerson;
 
-  public constructor(context: IWebPartContext, listName: string, mormalWeekToggle: boolean, period: TimePeriod) {
+  public constructor(context: IWebPartContext, listName: string, normalWeekToggleField: boolean, period: TimePeriod) {
     this._webPartContext = context;
-    this.mormalWeekToggle = mormalWeekToggle;
+    this.updateWeekType(normalWeekToggleField) ;
     this._period = period;
 
     this._listName = listName;
@@ -33,15 +33,11 @@ export class SharePointDataProvider implements IMyTimeAwayDataProvider {
 
   }
 
-  public set mormalWeekToggle(value: boolean) {
-    this._mormalWeekToggle = value;
+  public updateWeekType(value: boolean){
+    this._weekType = value? WeekType.FiveDays: WeekType.SevenDays;
   }
 
-  public get mormalWeekToggle(): boolean {
-    return this._mormalWeekToggle;
-  }
-
-  public set period(value: TimePeriod) {
+  public updatePeriod(value: TimePeriod) {
     this._period = value;
   }
 
@@ -266,7 +262,7 @@ export class SharePointDataProvider implements IMyTimeAwayDataProvider {
     let filterUrl: string = '';
     if (this._period == TimePeriod.Current) {
       let condition: string = '';
-      if (this._mormalWeekToggle) {//5 days
+      if (this._weekType == WeekType.FiveDays) {//5 days
         condition = moment.utc().startOf('week').add(1, 'days').format();// thisMO
       }
       else {
@@ -276,7 +272,7 @@ export class SharePointDataProvider implements IMyTimeAwayDataProvider {
     }
     else {
       let condition: string = '';
-      if (this._mormalWeekToggle) {//5 days
+      if (this._weekType == WeekType.FiveDays) {//5 days
         condition = moment.utc().startOf('week').add(1, 'days').format();// thisMO
       }
       else {

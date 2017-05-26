@@ -2,19 +2,22 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { Label, Button, ButtonType, List, FocusZone, FocusZoneDirection, css, Link } from 'office-ui-fabric-react';
 import IMyTimeAwayListItemProps from './IMyTimeAwayListItemProps';
+import IMyTimeAwayListItemState from './IMyTimeAwayListItemState';
 import { ApprovalStatus } from "../../models/timeAwayModel";
 
-export default class MyTimeAwayListItem extends React.Component<IMyTimeAwayListItemProps, {}> {
-  private _computedTitle: string;
+export default class MyTimeAwayListItem extends React.Component<IMyTimeAwayListItemProps, IMyTimeAwayListItemState> {
 
   constructor(props: IMyTimeAwayListItemProps) {
     super(props);
-    this.state = { showConfirmDialog: false };
-
-    this._computedTitle = `${moment(this.props.item.start).format('dddd, M/D ha')} to ${moment(this.props.item.end).format('dddd, M/D ha')}`;
+    this.state = { item: this.props.item };
     this._handleEditClick = this._handleEditClick.bind(this);
     this._handleDeleteClick = this._handleDeleteClick.bind(this);
   }
+    //edit item and update it
+  public componentWillReceiveProps(listitemprops: IMyTimeAwayListItemProps) {
+    this.state = { item: listitemprops.item };
+  }
+
   public render(): JSX.Element {
     const classMyAwayListItem: string = css(
       'ms-Grid',
@@ -38,7 +41,7 @@ export default class MyTimeAwayListItem extends React.Component<IMyTimeAwayListI
         <FocusZone direction={FocusZoneDirection.vertical}>
           <div className={css('ms-Grid-row')}>
             <Label>
-              <span className={'ms-Label'}>{this._computedTitle}</span>
+              <span className={'ms-Label'}>{this.computeTitle()}</span>
               {statusElement}
             </Label>
             <Button 
@@ -63,5 +66,8 @@ export default class MyTimeAwayListItem extends React.Component<IMyTimeAwayListI
   private _handleDeleteClick(event: React.MouseEvent<HTMLButtonElement>) {
     this.props.itemDeleteIconClickCallback(this.props.item);
     event.preventDefault();
+  }
+  private computeTitle():string{
+    return `${moment(this.state.item.start).format('dddd, M/D ha')} to ${moment(this.state.item.end).format('dddd, M/D ha')}`;
   }
 }

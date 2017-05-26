@@ -1,19 +1,18 @@
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import * as lodash from '@microsoft/sp-lodash-subset';
 import {IMyTimeAwayDataProvider} from '../dataProviders/IMyTimeAwayDataProvider';
-import { IMyTimeAwayItem } from "../models/timeAwayModel";
-import { TimePeriod, ApprovalStatus } from "../models/timeAwayModel";
+import { IMyTimeAwayItem, TimePeriod, ApprovalStatus, WeekType } from "../models/timeAwayModel";
 
 export class MockDataProvider implements IMyTimeAwayDataProvider {
 
   private _idCounter: number;
   private _items: IMyTimeAwayItem[];
   private _webPartContext: IWebPartContext;
-  private _mormalWeekToggle: boolean;
+  private _weekType: WeekType;
   private _period: TimePeriod;
 
-  constructor(value: IWebPartContext, listName: string, mormalWeekToggle: boolean, period: TimePeriod) {
-    this.mormalWeekToggle = mormalWeekToggle;
+  constructor(value: IWebPartContext, listName: string, normalWeekToggleField: boolean, period: TimePeriod) {
+    this.updateWeekType(normalWeekToggleField);
     this._period = period;
     this._idCounter = 0;
 
@@ -25,15 +24,11 @@ export class MockDataProvider implements IMyTimeAwayDataProvider {
       this._createMockMyTimeAwayItem({id : 4, firstName: 'Albert', lastName: 'xie', start: this._addDays(currentDate, 7), end: this._addDays(currentDate, 9), comments: 'Mock My Time Away Item 2', status: ApprovalStatus.Rejected }),
     ];
   }
-
-  public set mormalWeekToggle(value: boolean) {
-    this._mormalWeekToggle = value;
+  public updateWeekType(value: boolean){
+    this._weekType = value? WeekType.FiveDays: WeekType.SevenDays;
   }
 
-  public get mormalWeekToggle(): boolean {
-    return this._mormalWeekToggle;
-  }
-  public set period(value: TimePeriod) {
+  public updatePeriod(value: TimePeriod){
     this._period = value;
   }
   public getTimeAwayListItemEntityTypeFullName(): Promise<string> {
